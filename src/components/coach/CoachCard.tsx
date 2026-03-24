@@ -1,0 +1,52 @@
+import Link from 'next/link';
+import type { CoachWithProfile } from '@/types/database.types';
+
+interface Props {
+  coach: CoachWithProfile;
+}
+
+export default function CoachCard({ coach }: Props) {
+  return (
+    <Link href={`/coaches/${coach.id}`} className="block">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow p-6">
+        <div className="flex items-start gap-4">
+          <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden shrink-0">
+            {coach.profiles.avatar_url ? (
+              <img src={coach.profiles.avatar_url} alt={coach.profiles.full_name}
+                className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-400 text-xl font-medium">
+                {coach.profiles.full_name.charAt(0)}
+              </div>
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-lg text-gray-900">{coach.profiles.full_name}</h3>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                {coach.sport}
+              </span>
+              {coach.specialty && (
+                <span className="text-sm text-gray-500">{coach.specialty}</span>
+              )}
+            </div>
+            {coach.location && (
+              <p className="text-sm text-gray-500 mt-1">{coach.location}</p>
+            )}
+            {coach.description && (
+              <p className="text-sm text-gray-600 mt-2 line-clamp-2">{coach.description}</p>
+            )}
+            <div className="flex items-center gap-4 mt-3">
+              {coach.hourly_rate && (
+                <span className="text-sm font-semibold text-gray-900">${coach.hourly_rate}/hr</span>
+              )}
+              {coach.experience_years && (
+                <span className="text-sm text-gray-500">{coach.experience_years} yrs exp.</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
