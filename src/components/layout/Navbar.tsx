@@ -11,6 +11,7 @@ export default async function Navbar() {
   const role = cookieStore.get('user_role')?.value;
 
   let profile = null;
+  let unreadCount = 0;
   if (user) {
     const { data } = await supabase
       .from('profiles')
@@ -18,6 +19,14 @@ export default async function Navbar() {
       .eq('id', user.id)
       .single();
     profile = data;
+
+    // Get unread message count
+    const { data: unreadMessages } = await supabase
+      .from('messages')
+      .select('id')
+      .eq('receiver_id', user.id)
+      .eq('read', false);
+    unreadCount = unreadMessages?.length || 0;
   }
 
   const dashboardUrl = role === 'coach' ? '/coach/dashboard' : '/dashboard';
@@ -39,6 +48,14 @@ export default async function Navbar() {
             <>
               <Link href={dashboardUrl} className="text-sm text-gray-600 hover:text-gray-900">
                 Dashboard
+              </Link>
+              <Link href="/messages" className="text-sm text-gray-600 hover:text-gray-900 relative">
+                Messages
+                {unreadCount > 0 && (
+                  <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
               </Link>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">

@@ -32,12 +32,26 @@ export async function middleware(request: NextRequest) {
   if (
     pathname === '/' ||
     pathname.startsWith('/coaches') ||
+    pathname.startsWith('/groups') ||
+    pathname.startsWith('/explore') ||
+    pathname.startsWith('/sports') ||
     pathname.startsWith('/login') ||
     pathname.startsWith('/signup') ||
     pathname.startsWith('/auth') ||
+    pathname.startsWith('/api/stripe/webhook') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon')
   ) {
+    return supabaseResponse;
+  }
+
+  // Onboarding routes need auth but role-specific routing is handled in the page
+  if (pathname.startsWith('/onboarding')) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+    }
     return supabaseResponse;
   }
 

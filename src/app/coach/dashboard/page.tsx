@@ -16,6 +16,12 @@ export default async function CoachDashboardPage() {
 
   const today = new Date().toISOString().split('T')[0];
 
+  const { data: coachProfile } = await supabase
+    .from('coach_profiles')
+    .select('cancellation_hours, subscription_status, subscription_ends_at')
+    .eq('id', user.id)
+    .single();
+
   const { data: bookings } = await supabase
     .from('bookings')
     .select('*, client_profiles!inner(*, profiles!inner(full_name, avatar_url))')
@@ -34,22 +40,53 @@ export default async function CoachDashboardPage() {
           </div>
         </div>
 
+        {/* Subscription Status Banner */}
+        {coachProfile?.subscription_status && (
+          <div className="mb-8 rounded-xl border p-4 flex items-center justify-between" style={{
+            backgroundColor: coachProfile.subscription_status === 'active' ? '#dcfce7' : coachProfile.subscription_status === 'trial' ? '#fef3c7' : '#fee2e2',
+            borderColor: coachProfile.subscription_status === 'active' ? '#86efac' : coachProfile.subscription_status === 'trial' ? '#fcd34d' : '#fca5a5'
+          }}>
+            <div>
+              {coachProfile.subscription_status === 'active' && (
+                <p className="text-green-800 font-medium">✓ Subscription Active</p>
+              )}
+              {coachProfile.subscription_status === 'trial' && (
+                <p className="text-yellow-800 font-medium">🎉 Free Trial Active</p>
+              )}
+              {coachProfile.subscription_status === 'inactive' && (
+                <p className="text-red-800 font-medium">⏸️ Subscription Inactive</p>
+              )}
+              {coachProfile.subscription_status === 'cancelled' && (
+                <p className="text-red-800 font-medium">❌ Subscription Cancelled</p>
+              )}
+            </div>
+            <Link href="/coach/subscription" className="text-blue-600 hover:text-blue-700 font-medium text-sm">
+              Manage →
+            </Link>
+          </div>
+        )}
+
         {/* Quick Links */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
           <Link href="/coach/profile"
             className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-center">
-            <div className="text-2xl mb-1">&#128100;</div>
+            <div className="text-2xl mb-1">👤</div>
             <span className="font-medium text-gray-700">Edit Profile</span>
           </Link>
           <Link href="/coach/availability"
             className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-center">
-            <div className="text-2xl mb-1">&#128197;</div>
-            <span className="font-medium text-gray-700">Manage Availability</span>
+            <div className="text-2xl mb-1">📅</div>
+            <span className="font-medium text-gray-700">Availability</span>
           </Link>
-          <Link href={`/coaches/${user.id}`}
+          <Link href="/coach/groups"
             className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-center">
-            <div className="text-2xl mb-1">&#128065;</div>
-            <span className="font-medium text-gray-700">View Public Profile</span>
+            <div className="text-2xl mb-1">👥</div>
+            <span className="font-medium text-gray-700">Group Sessions</span>
+          </Link>
+          <Link href="/coach/packages"
+            className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-center">
+            <div className="text-2xl mb-1">📦</div>
+            <span className="font-medium text-gray-700">Packages</span>
           </Link>
         </div>
 
@@ -63,6 +100,7 @@ export default async function CoachDashboardPage() {
                 booking={booking}
                 otherPartyName={booking.client_profiles.profiles.full_name}
                 role="coach"
+                cancellationHours={coachProfile?.cancellation_hours}
               />
             ))}
           </div>

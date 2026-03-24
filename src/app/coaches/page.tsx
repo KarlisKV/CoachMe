@@ -12,7 +12,7 @@ export default async function CoachesPage({ searchParams }: Props) {
 
   let query = supabase
     .from('coach_profiles')
-    .select('*, profiles!inner(full_name, avatar_url, bio)');
+    .select('*, profiles!inner(full_name, avatar_url, bio), coach_ratings(*)');
 
   if (params.sport) {
     query = query.ilike('sport', `%${params.sport}%`);

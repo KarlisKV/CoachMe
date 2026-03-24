@@ -12,8 +12,15 @@ export async function updateCoachProfile(formData: FormData) {
     bio: formData.get('bio') as string,
   };
 
+  // Handle sports array
+  const sportsInput = formData.get('sports') as string;
+  const sports = sportsInput
+    ? sportsInput.split(',').map((s) => s.trim()).filter(Boolean)
+    : [];
+
   const coachData = {
     sport: formData.get('sport') as string,
+    sports,
     specialty: formData.get('specialty') as string,
     description: formData.get('description') as string,
     hourly_rate: formData.get('hourly_rate') ? Number(formData.get('hourly_rate')) : null,
@@ -21,6 +28,7 @@ export async function updateCoachProfile(formData: FormData) {
     contact_phone: formData.get('contact_phone') as string,
     location: formData.get('location') as string,
     experience_years: formData.get('experience_years') ? Number(formData.get('experience_years')) : null,
+    payment_methods: (formData.get('payment_methods') as string) || 'both',
   };
 
   const { error: profileError } = await supabase

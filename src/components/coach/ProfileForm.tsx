@@ -72,10 +72,18 @@ export default function CoachProfileForm({ profile, coachProfile }: Props) {
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Sport</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Primary Sport</label>
           <input name="sport" defaultValue={coachProfile.sport} required
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
         </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">All Sports (comma-separated)</label>
+        <input name="sports" defaultValue={coachProfile.sports?.join(', ') || ''}
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          placeholder="e.g., Basketball, Soccer, Tennis" />
+        <p className="text-xs text-gray-500 mt-1">Enter multiple sports separated by commas</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -132,6 +140,30 @@ export default function CoachProfileForm({ profile, coachProfile }: Props) {
           <label className="block text-sm font-medium text-gray-700 mb-1">Contact Phone</label>
           <input name="contact_phone" type="tel" defaultValue={coachProfile.contact_phone || ''}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-3">Payment Methods</label>
+        <div className="space-y-2">
+          <label className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+            <input type="radio" name="payment_methods" value="cash"
+              defaultChecked={coachProfile.payment_methods === 'cash'}
+              className="w-4 h-4" />
+            <span className="text-gray-700">Cash only</span>
+          </label>
+          <label className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+            <input type="radio" name="payment_methods" value="card"
+              defaultChecked={coachProfile.payment_methods === 'card'}
+              className="w-4 h-4" />
+            <span className="text-gray-700">Card only</span>
+          </label>
+          <label className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+            <input type="radio" name="payment_methods" value="both"
+              defaultChecked={coachProfile.payment_methods === 'both' || !coachProfile.payment_methods}
+              className="w-4 h-4" />
+            <span className="text-gray-700">Both cash and card</span>
+          </label>
         </div>
       </div>
 

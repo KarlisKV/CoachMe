@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import SlotPicker from '@/components/booking/SlotPicker';
+import ReviewList from '@/components/reviews/ReviewList';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -137,6 +138,12 @@ export default async function CoachDetailPage({ params }: Props) {
                 </div>
               </div>
             )}
+
+            {/* Reviews */}
+            <div>
+              <h2 className="text-lg font-semibold mb-3">Reviews</h2>
+              <ReviewList coachId={id} />
+            </div>
           </div>
 
           {/* Right column: Book a Session */}

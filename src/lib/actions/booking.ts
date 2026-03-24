@@ -2,6 +2,8 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { sendEmail } from '@/lib/email/resend';
+import { bookingConfirmationEmail, bookingStatusChangeEmail } from '@/lib/email/templates';
 
 export async function createBooking(formData: FormData) {
   const supabase = await createClient();
@@ -23,6 +25,47 @@ export async function createBooking(formData: FormData) {
 
   if (error) return { error: error.message };
 
+  // Fetch client and coach info for email
+  const { data: clientProfile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', user.id)
+    .single();
+
+  const { data: coachProfile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', coachId)
+    .single();
+
+  const { data: coachAuth } = await supabase.auth.admin.getUserById(coachId);
+
+  // Send confirmation emails to both parties
+  if (clientProfile && coachProfile) {
+    const html = bookingConfirmationEmail({
+      clientName: clientProfile.full_name,
+      coachName: coachProfile.full_name,
+      date: slotDate,
+      time: `${startTime.slice(0, 5)} - ${endTime.slice(0, 5)}`,
+    });
+
+    // Email to client
+    await sendEmail({
+      to: user.email!,
+      subject: 'Booking Request Submitted',
+      html,
+    });
+
+    // Email to coach
+    if (coachAuth?.user?.email) {
+      await sendEmail({
+        to: coachAuth.user.email,
+        subject: `New Booking Request from ${clientProfile.full_name}`,
+        html,
+      });
+    }
+  }
+
   revalidatePath('/dashboard');
   revalidatePath(`/coaches/${coachId}`);
   return { success: true, bookingId: data };
@@ -33,12 +76,109 @@ export async function updateBookingStatus(bookingId: string, status: 'confirmed'
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
+  // If cancelling, check cancellation policy
+  if (status === 'cancelled') {
+    const { data: booking } = await supabase
+      .from('bookings')
+      .select('coach_id, slot_date')
+      .eq('id', bookingId)
+      .single();
+
+    if (booking) {
+      const { data: coach } = await supabase
+        .from('coach_profiles')
+        .select('cancellation_hours')
+        .eq('id', booking.coach_id)
+        .single();
+
+      if (coach) {
+        const bookingDate = new Date(booking.slot_date);
+        const now = new Date();
+        const hoursUntilSession = (bookingDate.getTime() - now.getTime()) / (1000 * 60 * 60);
+
+        if (hoursUntilSession < coach.cancellation_hours) {
+          return {
+            error: `Cannot cancel within ${coach.cancellation_hours} hours of the session`,
+          };
+        }
+      }
+    }
+  }
+
+  const updateData: any = { status };
+  if (status === 'cancelled') {
+    updateData.cancelled_at = new Date().toISOString();
+  }
+
+  // Fetch booking details before updating
+  const { data: booking } = await supabase
+    .from('bookings')
+    .select('client_id, coach_id, slot_date, start_time, end_time')
+    .eq('id', bookingId)
+    .single();
+
   const { error } = await supabase
     .from('bookings')
-    .update({ status })
+    .update(updateData)
     .eq('id', bookingId);
 
   if (error) return { error: error.message };
+
+  // Send status change emails
+  if (booking) {
+    const { data: clientProfile } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', booking.client_id)
+      .single();
+
+    const { data: coachProfile } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', booking.coach_id)
+      .single();
+
+    const { data: clientAuth } = await supabase.auth.admin.getUserById(booking.client_id);
+    const { data: coachAuth } = await supabase.auth.admin.getUserById(booking.coach_id);
+
+    if (clientProfile && coachProfile) {
+      const time = `${booking.start_time.slice(0, 5)} - ${booking.end_time.slice(0, 5)}`;
+
+      // Email to client
+      if (clientAuth?.user?.email) {
+        const html = bookingStatusChangeEmail({
+          recipientName: clientProfile.full_name,
+          status,
+          date: booking.slot_date,
+          time,
+          otherPartyName: coachProfile.full_name,
+        });
+
+        await sendEmail({
+          to: clientAuth.user.email,
+          subject: `Booking ${status === 'confirmed' ? 'Confirmed' : 'Cancelled'}`,
+          html,
+        });
+      }
+
+      // Email to coach (only for confirmed status)
+      if (status === 'confirmed' && coachAuth?.user?.email) {
+        const html = bookingStatusChangeEmail({
+          recipientName: coachProfile.full_name,
+          status,
+          date: booking.slot_date,
+          time,
+          otherPartyName: clientProfile.full_name,
+        });
+
+        await sendEmail({
+          to: coachAuth.user.email,
+          subject: `Booking Confirmed with ${clientProfile.full_name}`,
+          html,
+        });
+      }
+    }
+  }
 
   revalidatePath('/dashboard');
   revalidatePath('/coach/dashboard');

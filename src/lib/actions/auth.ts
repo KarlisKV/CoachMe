@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { sendEmail } from '@/lib/email/resend';
+import { welcomeEmail } from '@/lib/email/templates';
 import type { UserRole } from '@/types/database.types';
 
 export async function signUp(formData: FormData) {
@@ -40,6 +42,14 @@ export async function signUp(formData: FormData) {
     await supabase.from('client_profiles').insert({ id: data.user.id });
   }
 
+  // Send welcome email
+  const htmlEmail = welcomeEmail({ name: fullName, role });
+  await sendEmail({
+    to: email,
+    subject: `Welcome to CoachMe!`,
+    html: htmlEmail,
+  });
+
   // Set role cookie for middleware
   const cookieStore = await cookies();
   cookieStore.set('user_role', role, {
@@ -49,7 +59,7 @@ export async function signUp(formData: FormData) {
     sameSite: 'lax',
   });
 
-  redirect(role === 'coach' ? '/coach/dashboard' : '/dashboard');
+  redirect('/onboarding');
 }
 
 export async function signIn(formData: FormData) {
