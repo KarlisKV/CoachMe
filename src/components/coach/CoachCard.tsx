@@ -49,7 +49,7 @@ export default function CoachCard({ coach }: Props) {
             )}
             <div className="flex items-center gap-4 mt-3">
               {coach.hourly_rate && (
-                <span className="text-sm font-semibold text-gray-900">${coach.hourly_rate}/hr</span>
+                <span className="text-sm font-semibold text-gray-900">€{coach.hourly_rate}/hr</span>
               )}
               {coach.experience_years && (
                 <span className="text-sm text-gray-500">{coach.experience_years} yrs exp.</span>

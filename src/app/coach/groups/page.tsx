@@ -26,12 +26,12 @@ export default async function CoachGroupsPage() {
             <h1 className="text-3xl font-bold">Group Sessions</h1>
             <p className="text-gray-600 mt-1">Manage your group coaching sessions</p>
           </div>
-          <button
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-            onClick={() => document.getElementById('create-form')?.scrollIntoView({ behavior: 'smooth' })}
+          <a
+            href="#create-form"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors inline-block"
           >
             + Create Session
-          </button>
+          </a>
         </div>
 
         {/* Create Form */}

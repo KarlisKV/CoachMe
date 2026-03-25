@@ -81,6 +81,9 @@ export default function CoachOnboarding() {
     formData.append('contact_email', contactEmail);
     formData.append('contact_phone', contactPhone);
     formData.append('bio', bio);
+    formData.append('availability_days', JSON.stringify(selectedDays));
+    formData.append('start_time', startTime);
+    formData.append('end_time', endTime);
 
     const result = await completeCoachOnboarding(formData);
     if (result.error) {
@@ -171,7 +174,7 @@ export default function CoachOnboarding() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Hourly Rate ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Hourly Rate (€)</label>
                 <input
                   type="number"
                   value={hourlyRate}

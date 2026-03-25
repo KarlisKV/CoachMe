@@ -42,6 +42,32 @@ export async function completeCoachOnboarding(formData: FormData) {
 
   if (coachError) return { error: coachError.message };
 
+  // Insert availability slots
+  const availabilityDays = JSON.parse(formData.get('availability_days') as string || '[]') as number[];
+  const startTime = formData.get('start_time') as string;
+  const endTime = formData.get('end_time') as string;
+
+  if (availabilityDays.length > 0 && startTime && endTime) {
+    // Delete any existing slots first
+    await supabase
+      .from('availability_slots')
+      .delete()
+      .eq('coach_id', user.id);
+
+    const slots = availabilityDays.map(day => ({
+      coach_id: user.id,
+      day_of_week: day,
+      start_time: startTime,
+      end_time: endTime,
+    }));
+
+    const { error: slotsError } = await supabase
+      .from('availability_slots')
+      .insert(slots);
+
+    if (slotsError) return { error: slotsError.message };
+  }
+
   revalidatePath('/coach/dashboard');
   return { success: true };
 }

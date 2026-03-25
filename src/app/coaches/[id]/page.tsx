@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import SlotPicker from '@/components/booking/SlotPicker';
 import ReviewList from '@/components/reviews/ReviewList';
+import MessageButton from '@/components/messaging/MessageButton';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -80,7 +81,7 @@ export default async function CoachDetailPage({ params }: Props) {
               <div className="flex items-center gap-6 mt-4">
                 {coach.hourly_rate && (
                   <div>
-                    <span className="text-2xl font-bold">${coach.hourly_rate}</span>
+                    <span className="text-2xl font-bold">€{coach.hourly_rate}</span>
                     <span className="text-gray-500">/hour</span>
                   </div>
                 )}
@@ -90,6 +91,11 @@ export default async function CoachDetailPage({ params }: Props) {
                   </div>
                 )}
               </div>
+              {user && user.id !== id && (
+                <div className="mt-4">
+                  <MessageButton receiverId={id} receiverName={coach.profiles.full_name} />
+                </div>
+              )}
             </div>
           </div>
         </div>
