@@ -18,7 +18,7 @@ export default async function CoachDashboardPage() {
 
   const { data: coachProfile } = await supabase
     .from('coach_profiles')
-    .select('cancellation_hours, subscription_status, subscription_ends_at')
+    .select('cancellation_hours, subscription_status, subscription_ends_at, sport, location')
     .eq('id', user.id)
     .single();
 
@@ -99,8 +99,10 @@ export default async function CoachDashboardPage() {
                 key={booking.id}
                 booking={booking}
                 otherPartyName={booking.client_profiles.profiles.full_name}
+                otherPartySport={coachProfile?.sport}
                 role="coach"
                 cancellationHours={coachProfile?.cancellation_hours}
+                location={coachProfile?.location || undefined}
               />
             ))}
           </div>

@@ -3,15 +3,24 @@
 import { joinGroupSession } from '@/lib/actions/groups';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { generateGroupSessionCalendarUrl } from '@/lib/utils/calendar';
+import AddToCalendarButton from '@/components/booking/AddToCalendarButton';
 
 interface BookingFormProps {
   sessionId: string;
   maxParticipants: number;
+  sessionTitle: string;
+  sessionDate: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  coachName: string;
 }
 
-export function Booking({ sessionId, maxParticipants }: BookingFormProps) {
+export function Booking({ sessionId, maxParticipants, sessionTitle, sessionDate, startTime, endTime, location, coachName }: BookingFormProps) {
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'card' | null>(null);
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,6 +30,7 @@ export function Booking({ sessionId, maxParticipants }: BookingFormProps) {
     const result = await joinGroupSession(sessionId, paymentMethod);
 
     if (result.success) {
+      setSuccess(true);
       router.refresh();
     } else {
       alert(result.error || 'Failed to join session');
@@ -28,6 +38,26 @@ export function Booking({ sessionId, maxParticipants }: BookingFormProps) {
 
     setLoading(false);
   };
+
+  if (success) {
+    const calendarUrl = generateGroupSessionCalendarUrl({
+      title: sessionTitle,
+      date: sessionDate,
+      startTime,
+      endTime,
+      location,
+      coachName,
+    });
+
+    return (
+      <div className="text-center py-4">
+        <div className="text-green-600 font-medium mb-2">You've joined the session!</div>
+        <div className="mt-3">
+          <AddToCalendarButton calendarUrl={calendarUrl} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

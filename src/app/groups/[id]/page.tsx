@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Booking } from '@/components/groups/BookingForm';
+import { generateGroupSessionCalendarUrl } from '@/lib/utils/calendar';
+import AddToCalendarButton from '@/components/booking/AddToCalendarButton';
 
 export default async function GroupSessionDetailPage({
   params,
@@ -165,6 +167,18 @@ export default async function GroupSessionDetailPage({
                     <p className="text-green-800 font-medium">
                       ✓ You're registered for this session
                     </p>
+                    <div className="mt-3">
+                      <AddToCalendarButton
+                        calendarUrl={generateGroupSessionCalendarUrl({
+                          title: session.title,
+                          date: session.session_date,
+                          startTime: session.start_time,
+                          endTime: session.end_time,
+                          location: session.location,
+                          coachName: session.coach_profiles.profiles.full_name,
+                        })}
+                      />
+                    </div>
                   </div>
                 ) : isFull ? (
                   <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -176,6 +190,12 @@ export default async function GroupSessionDetailPage({
                   <Booking
                     sessionId={params.id}
                     maxParticipants={session.max_participants}
+                    sessionTitle={session.title}
+                    sessionDate={session.session_date}
+                    startTime={session.start_time}
+                    endTime={session.end_time}
+                    location={session.location}
+                    coachName={session.coach_profiles.profiles.full_name}
                   />
                 )
               ) : (

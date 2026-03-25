@@ -151,7 +151,13 @@ export default async function CoachDetailPage({ params }: Props) {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-8">
               <h2 className="text-lg font-semibold mb-4">Book a Session</h2>
               {user ? (
-                <SlotPicker coachId={id} slots={slots || []} />
+                <SlotPicker
+                  coachId={id}
+                  coachName={coach.profiles.full_name}
+                  coachSport={coach.sport}
+                  coachLocation={coach.location || undefined}
+                  slots={slots || []}
+                />
               ) : (
                 <div className="text-center">
                   <p className="text-gray-500 text-sm mb-4">Sign in to book a session</p>

@@ -52,11 +52,13 @@ export function bookingConfirmationEmail({
   coachName,
   date,
   time,
+  calendarUrl,
 }: {
   clientName: string;
   coachName: string;
   date: string;
   time: string;
+  calendarUrl?: string;
 }): string {
   return `
     <html style="${baseStyles}">
@@ -79,7 +81,9 @@ export function bookingConfirmationEmail({
               <p style="margin: 8px 0 0 0;"><strong>Coach:</strong> ${coachName}</p>
             </div>
 
-            <p>We're looking forward to seeing you! If you need to reschedule or have any questions, please log in to your account or reach out to your coach.</p>
+            ${calendarUrl ? `<a href="${calendarUrl}" style="${buttonStyles}" target="_blank">Add to Google Calendar</a>` : ''}
+
+            <p style="margin-top: 16px;">We're looking forward to seeing you! If you need to reschedule or have any questions, please log in to your account or reach out to your coach.</p>
 
             <p>Best regards,<br>The CoachMe Team</p>
           </div>
@@ -100,12 +104,14 @@ export function bookingStatusChangeEmail({
   date,
   time,
   otherPartyName,
+  calendarUrl,
 }: {
   recipientName: string;
   status: 'confirmed' | 'cancelled';
   date: string;
   time: string;
   otherPartyName: string;
+  calendarUrl?: string;
 }): string {
   const isConfirmed = status === 'confirmed';
   const statusText = isConfirmed ? 'Confirmed' : 'Cancelled';
@@ -135,8 +141,10 @@ export function bookingStatusChangeEmail({
               <p style="margin: 8px 0 0 0;"><strong>${isConfirmed ? 'Coach' : 'Other Party'}:</strong> ${otherPartyName}</p>
             </div>
 
+            ${isConfirmed && calendarUrl ? `<a href="${calendarUrl}" style="${buttonStyles}" target="_blank">Add to Google Calendar</a>` : ''}
+
             ${isConfirmed
-              ? '<p>We look forward to a great session!</p>'
+              ? '<p style="margin-top: 16px;">We look forward to a great session!</p>'
               : '<p>If you need to discuss this cancellation, please reach out to the other party.</p>'}
 
             <p>Best regards,<br>The CoachMe Team</p>

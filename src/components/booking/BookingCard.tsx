@@ -4,17 +4,20 @@ import { useState } from 'react';
 import { updateBookingStatus } from '@/lib/actions/booking';
 import SessionCompletion from './SessionCompletion';
 import SessionNoteForm from './SessionNoteForm';
-import Link from 'next/link';
+import AddToCalendarButton from './AddToCalendarButton';
 import type { Booking, SessionNote } from '@/types/database.types';
+import { generateGoogleCalendarUrl } from '@/lib/utils/calendar';
 
 interface Props {
   booking: Booking & { session_notes?: SessionNote[] };
   otherPartyName: string;
+  otherPartySport?: string;
   role: 'coach' | 'client';
   cancellationHours?: number;
+  location?: string;
 }
 
-export default function BookingCard({ booking, otherPartyName, role, cancellationHours = 24 }: Props) {
+export default function BookingCard({ booking, otherPartyName, otherPartySport, role, cancellationHours = 24, location }: Props) {
   const [loading, setLoading] = useState(false);
   const [cancellationWarning, setCancellationWarning] = useState<string | null>(null);
 
@@ -49,6 +52,15 @@ export default function BookingCard({ booking, otherPartyName, role, cancellatio
   const today = new Date().toISOString().split('T')[0];
   const sessionPassed = booking.slot_date < today;
   const existingNote = booking.session_notes?.[0];
+
+  const calendarUrl = generateGoogleCalendarUrl({
+    title: `${otherPartySport || 'Coaching'} Session with ${otherPartyName}`,
+    date: booking.slot_date,
+    startTime: booking.start_time,
+    endTime: booking.end_time,
+    description: `${role === 'client' ? 'Coaching' : 'Client'} session with ${otherPartyName} via CoachMe.`,
+    location: location,
+  });
 
   return (
     <div className="space-y-3">
@@ -87,11 +99,18 @@ export default function BookingCard({ booking, otherPartyName, role, cancellatio
         )}
 
         {booking.status === 'confirmed' && !sessionPassed && (
-          <div className="mt-3">
+          <div className="flex items-center justify-between mt-3">
+            <AddToCalendarButton calendarUrl={calendarUrl} compact />
             <button onClick={() => handleAction('cancelled')} disabled={loading}
               className="text-sm text-red-600 hover:underline disabled:opacity-50">
               Cancel booking
             </button>
+          </div>
+        )}
+
+        {booking.status === 'pending' && role === 'client' && (
+          <div className="mt-2">
+            <AddToCalendarButton calendarUrl={calendarUrl} compact />
           </div>
         )}
       </div>

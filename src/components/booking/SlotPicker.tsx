@@ -4,14 +4,19 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { getAvailableSlots, type TimeSlot } from '@/lib/utils/availability';
 import { createBooking } from '@/lib/actions/booking';
+import { generateGoogleCalendarUrl } from '@/lib/utils/calendar';
+import AddToCalendarButton from './AddToCalendarButton';
 import type { AvailabilitySlot } from '@/types/database.types';
 
 interface Props {
   coachId: string;
+  coachName?: string;
+  coachSport?: string;
+  coachLocation?: string;
   slots: AvailabilitySlot[];
 }
 
-export default function SlotPicker({ coachId, slots }: Props) {
+export default function SlotPicker({ coachId, coachName, coachSport, coachLocation, slots }: Props) {
   const [selectedDate, setSelectedDate] = useState('');
   const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
@@ -70,12 +75,26 @@ export default function SlotPicker({ coachId, slots }: Props) {
   }
 
   if (success) {
+    const calendarUrl = selectedSlot ? generateGoogleCalendarUrl({
+      title: `${coachSport || 'Coaching'} Session with ${coachName || 'Coach'}`,
+      date: selectedDate,
+      startTime: selectedSlot.start_time,
+      endTime: selectedSlot.end_time,
+      description: `Coaching session with ${coachName || 'your coach'} via CoachMe.`,
+      location: coachLocation,
+    }) : '';
+
     return (
       <div className="text-center py-4">
         <div className="text-green-600 font-medium mb-2">Booking confirmed!</div>
         <p className="text-sm text-gray-500">{selectedDate} at {selectedSlot?.start_time}</p>
+        {calendarUrl && (
+          <div className="mt-3">
+            <AddToCalendarButton calendarUrl={calendarUrl} />
+          </div>
+        )}
         <button onClick={() => { setSuccess(false); setSelectedDate(''); setSelectedSlot(null); }}
-          className="text-blue-600 hover:underline text-sm mt-3">
+          className="text-blue-600 hover:underline text-sm mt-3 block mx-auto">
           Book another session
         </button>
       </div>

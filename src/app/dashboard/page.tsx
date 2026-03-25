@@ -88,7 +88,9 @@ export default async function ClientDashboardPage() {
                 key={booking.id}
                 booking={booking}
                 otherPartyName={booking.coach_profiles.profiles.full_name}
+                otherPartySport={booking.coach_profiles.sport}
                 role="client"
+                location={booking.coach_profiles.location || undefined}
               />
             ))}
           </div>

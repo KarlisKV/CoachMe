@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { sendEmail } from '@/lib/email/resend';
 import { bookingConfirmationEmail, bookingStatusChangeEmail } from '@/lib/email/templates';
+import { generateGoogleCalendarUrl } from '@/lib/utils/calendar';
 
 export async function createBooking(formData: FormData) {
   const supabase = await createClient();
@@ -38,30 +39,66 @@ export async function createBooking(formData: FormData) {
     .eq('id', coachId)
     .single();
 
+  const { data: coachDetails } = await supabase
+    .from('coach_profiles')
+    .select('sport, location')
+    .eq('id', coachId)
+    .single();
+
   const { data: coachAuth } = await supabase.auth.admin.getUserById(coachId);
 
   // Send confirmation emails to both parties
   if (clientProfile && coachProfile) {
-    const html = bookingConfirmationEmail({
-      clientName: clientProfile.full_name,
-      coachName: coachProfile.full_name,
+    const time = `${startTime.slice(0, 5)} - ${endTime.slice(0, 5)}`;
+    const sport = coachDetails?.sport || 'Coaching';
+
+    // Calendar URL for client
+    const clientCalendarUrl = generateGoogleCalendarUrl({
+      title: `${sport} Session with ${coachProfile.full_name}`,
       date: slotDate,
-      time: `${startTime.slice(0, 5)} - ${endTime.slice(0, 5)}`,
+      startTime,
+      endTime,
+      description: `Coaching session with ${coachProfile.full_name} via CoachMe.`,
+      location: coachDetails?.location || undefined,
+    });
+
+    // Calendar URL for coach
+    const coachCalendarUrl = generateGoogleCalendarUrl({
+      title: `${sport} Session with ${clientProfile.full_name}`,
+      date: slotDate,
+      startTime,
+      endTime,
+      description: `Client session with ${clientProfile.full_name} via CoachMe.`,
+      location: coachDetails?.location || undefined,
     });
 
     // Email to client
+    const clientHtml = bookingConfirmationEmail({
+      clientName: clientProfile.full_name,
+      coachName: coachProfile.full_name,
+      date: slotDate,
+      time,
+      calendarUrl: clientCalendarUrl,
+    });
     await sendEmail({
       to: user.email!,
       subject: 'Booking Request Submitted',
-      html,
+      html: clientHtml,
     });
 
     // Email to coach
     if (coachAuth?.user?.email) {
+      const coachHtml = bookingConfirmationEmail({
+        clientName: clientProfile.full_name,
+        coachName: coachProfile.full_name,
+        date: slotDate,
+        time,
+        calendarUrl: coachCalendarUrl,
+      });
       await sendEmail({
         to: coachAuth.user.email,
         subject: `New Booking Request from ${clientProfile.full_name}`,
-        html,
+        html: coachHtml,
       });
     }
   }
@@ -144,6 +181,34 @@ export async function updateBookingStatus(bookingId: string, status: 'confirmed'
     if (clientProfile && coachProfile) {
       const time = `${booking.start_time.slice(0, 5)} - ${booking.end_time.slice(0, 5)}`;
 
+      // Fetch coach details for calendar
+      const { data: coachDetails } = await supabase
+        .from('coach_profiles')
+        .select('sport, location')
+        .eq('id', booking.coach_id)
+        .single();
+
+      const sport = coachDetails?.sport || 'Coaching';
+
+      // Generate calendar URLs for confirmed bookings
+      const clientCalendarUrl = status === 'confirmed' ? generateGoogleCalendarUrl({
+        title: `${sport} Session with ${coachProfile.full_name}`,
+        date: booking.slot_date,
+        startTime: booking.start_time,
+        endTime: booking.end_time,
+        description: `Coaching session with ${coachProfile.full_name} via CoachMe.`,
+        location: coachDetails?.location || undefined,
+      }) : undefined;
+
+      const coachCalendarUrl = status === 'confirmed' ? generateGoogleCalendarUrl({
+        title: `${sport} Session with ${clientProfile.full_name}`,
+        date: booking.slot_date,
+        startTime: booking.start_time,
+        endTime: booking.end_time,
+        description: `Client session with ${clientProfile.full_name} via CoachMe.`,
+        location: coachDetails?.location || undefined,
+      }) : undefined;
+
       // Email to client
       if (clientAuth?.user?.email) {
         const html = bookingStatusChangeEmail({
@@ -152,6 +217,7 @@ export async function updateBookingStatus(bookingId: string, status: 'confirmed'
           date: booking.slot_date,
           time,
           otherPartyName: coachProfile.full_name,
+          calendarUrl: clientCalendarUrl,
         });
 
         await sendEmail({
@@ -169,6 +235,7 @@ export async function updateBookingStatus(bookingId: string, status: 'confirmed'
           date: booking.slot_date,
           time,
           otherPartyName: clientProfile.full_name,
+          calendarUrl: coachCalendarUrl,
         });
 
         await sendEmail({
