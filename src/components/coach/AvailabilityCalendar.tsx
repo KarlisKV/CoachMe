@@ -50,7 +50,7 @@ export default function AvailabilityCalendar({ slots }: Props) {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Day</label>
             <select value={selectedDay} onChange={e => setSelectedDay(Number(e.target.value))}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900">
               {DAYS.map((day, i) => (
                 <option key={i} value={i}>{day}</option>
               ))}
@@ -59,7 +59,7 @@ export default function AvailabilityCalendar({ slots }: Props) {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">From</label>
             <select value={startTime} onChange={e => setStartTime(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900">
               {timeOptions.map(t => (
                 <option key={t} value={t}>{t}</option>
               ))}
@@ -68,7 +68,7 @@ export default function AvailabilityCalendar({ slots }: Props) {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">To</label>
             <select value={endTime} onChange={e => setEndTime(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900">
               {timeOptions.map(t => (
                 <option key={t} value={t}>{t}</option>
               ))}

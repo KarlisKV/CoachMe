@@ -69,19 +69,19 @@ export default function CoachProfileForm({ profile, coachProfile }: Props) {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
           <input name="full_name" defaultValue={profile.full_name} required
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Primary Sport</label>
           <input name="sport" defaultValue={coachProfile.sport} required
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500" />
         </div>
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">All Sports (comma-separated)</label>
         <input name="sports" defaultValue={coachProfile.sports?.join(', ') || ''}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="e.g., Basketball, Soccer, Tennis" />
         <p className="text-xs text-gray-500 mt-1">Enter multiple sports separated by commas</p>
       </div>
@@ -90,13 +90,13 @@ export default function CoachProfileForm({ profile, coachProfile }: Props) {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Specialty</label>
           <input name="specialty" defaultValue={coachProfile.specialty || ''}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
             placeholder="e.g., Sprint training" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
           <input name="location" defaultValue={coachProfile.location || ''}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
             placeholder="e.g., New York, NY" />
         </div>
       </div>
@@ -106,27 +106,27 @@ export default function CoachProfileForm({ profile, coachProfile }: Props) {
           <label className="block text-sm font-medium text-gray-700 mb-1">Hourly Rate ($)</label>
           <input name="hourly_rate" type="number" min="0" step="0.01"
             defaultValue={coachProfile.hourly_rate || ''}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
           <input name="experience_years" type="number" min="0"
             defaultValue={coachProfile.experience_years || ''}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500" />
         </div>
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
         <textarea name="description" rows={4} defaultValue={coachProfile.description || ''}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Tell clients about yourself and your coaching style..." />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
         <textarea name="bio" rows={2} defaultValue={profile.bio || ''}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="A short bio about yourself" />
       </div>
 
@@ -134,12 +134,12 @@ export default function CoachProfileForm({ profile, coachProfile }: Props) {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
           <input name="contact_email" type="email" defaultValue={coachProfile.contact_email || ''}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Contact Phone</label>
           <input name="contact_phone" type="tel" defaultValue={coachProfile.contact_phone || ''}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500" />
         </div>
       </div>
 

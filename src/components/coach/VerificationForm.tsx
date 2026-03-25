@@ -102,7 +102,7 @@ export default function VerificationForm({ currentStatus, existingRequest }: Pro
                     const file = e.target.files?.[0];
                     setFileName(file?.name || null);
                   }}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900"
                   required
                 />
               </div>
@@ -120,7 +120,7 @@ export default function VerificationForm({ currentStatus, existingRequest }: Pro
             <textarea
               name="certification_urls"
               rows={3}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
               placeholder="Enter certification URLs, one per line&#10;e.g., https://example.com/cert1&#10;https://example.com/cert2"
             />
             <p className="text-xs text-gray-500 mt-1">Links to verify your coaching certifications</p>
@@ -133,7 +133,7 @@ export default function VerificationForm({ currentStatus, existingRequest }: Pro
             <textarea
               name="notes"
               rows={3}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
               placeholder="Add any additional information about your qualifications..."
             />
           </div>
@@ -175,7 +175,7 @@ export default function VerificationForm({ currentStatus, existingRequest }: Pro
                 const file = e.target.files?.[0];
                 setFileName(file?.name || null);
               }}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900"
               required
             />
           </div>
@@ -193,7 +193,7 @@ export default function VerificationForm({ currentStatus, existingRequest }: Pro
         <textarea
           name="certification_urls"
           rows={3}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Enter certification URLs, one per line&#10;e.g., https://example.com/cert1&#10;https://example.com/cert2"
         />
         <p className="text-xs text-gray-500 mt-1">Links to verify your coaching certifications</p>
@@ -206,7 +206,7 @@ export default function VerificationForm({ currentStatus, existingRequest }: Pro
         <textarea
           name="notes"
           rows={3}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Add any additional information about your qualifications..."
         />
       </div>

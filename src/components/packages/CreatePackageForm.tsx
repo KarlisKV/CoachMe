@@ -53,7 +53,7 @@ export default function CreatePackageForm() {
           id="title"
           placeholder="e.g., 10 Sessions Bundle"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
       </div>
 
@@ -67,7 +67,7 @@ export default function CreatePackageForm() {
           id="description"
           placeholder="Describe what's included in this package..."
           rows={3}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
       </div>
 
@@ -80,7 +80,7 @@ export default function CreatePackageForm() {
           name="sport"
           id="sport"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
         >
           <option value="">Select a sport</option>
           {SPORTS.map((sport) => (
@@ -103,7 +103,7 @@ export default function CreatePackageForm() {
           min="1"
           placeholder="10"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
       </div>
 
@@ -119,7 +119,7 @@ export default function CreatePackageForm() {
           min="0"
           placeholder="20000 (€200)"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
         <p className="text-sm text-gray-500 mt-1">Enter price in cents (e.g., 20000 for €200)</p>
       </div>

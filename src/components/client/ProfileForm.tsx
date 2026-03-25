@@ -59,20 +59,20 @@ export default function ClientProfileForm({ profile, clientProfile }: Props) {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
         <input name="full_name" defaultValue={profile.full_name} required
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500" />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
         <textarea name="bio" rows={3} defaultValue={profile.bio || ''}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Tell coaches about yourself..." />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Skill Level</label>
         <select name="skill_level" defaultValue={clientProfile.skill_level || ''}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900">
           <option value="">Select level</option>
           <option value="beginner">Beginner</option>
           <option value="intermediate">Intermediate</option>
@@ -83,7 +83,7 @@ export default function ClientProfileForm({ profile, clientProfile }: Props) {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Sports Interests</label>
         <input name="sports_interests" defaultValue={clientProfile.sports_interests?.join(', ') || ''}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Tennis, Swimming, Running (comma-separated)" />
       </div>
 

@@ -56,7 +56,7 @@ export default function CreateGoalForm({ coaches, onSuccess }: CreateGoalFormPro
               type="text"
               name="title"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
               placeholder="e.g., Improve serve accuracy"
             />
           </div>
@@ -68,7 +68,7 @@ export default function CreateGoalForm({ coaches, onSuccess }: CreateGoalFormPro
             <textarea
               name="description"
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
               placeholder="Add details about your goal..."
             />
           </div>
@@ -80,7 +80,7 @@ export default function CreateGoalForm({ coaches, onSuccess }: CreateGoalFormPro
               </label>
               <select
                 name="coach_id"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               >
                 <option value="">Select a coach...</option>
                 {coaches.map((coach) => (

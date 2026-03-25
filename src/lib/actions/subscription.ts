@@ -42,18 +42,7 @@ export async function createCheckoutSession() {
       payment_method_types: ['card'],
       line_items: [
         {
-          price_data: {
-            currency: 'eur',
-            product_data: {
-              name: 'CoachMe Coach Subscription',
-              description: 'Monthly subscription to list your coaching profile',
-            },
-            unit_amount: COACH_SUBSCRIPTION_PRICE,
-            recurring: {
-              interval: 'month',
-              interval_count: 1,
-            },
-          },
+          price: process.env.STRIPE_COACH_PRICE_ID!,
           quantity: 1,
         },
       ],

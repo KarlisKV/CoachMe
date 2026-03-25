@@ -53,7 +53,7 @@ export default function CreateGroupSessionForm() {
           id="title"
           placeholder="e.g., Beginner Basketball Training"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
       </div>
 
@@ -67,7 +67,7 @@ export default function CreateGroupSessionForm() {
           id="description"
           placeholder="Tell participants what to expect..."
           rows={4}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
       </div>
 
@@ -80,7 +80,7 @@ export default function CreateGroupSessionForm() {
           name="sport"
           id="sport"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
         >
           <option value="">Select a sport</option>
           {SPORTS.map((sport) => (
@@ -104,7 +104,7 @@ export default function CreateGroupSessionForm() {
           max="100"
           placeholder="10"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
       </div>
 
@@ -120,7 +120,7 @@ export default function CreateGroupSessionForm() {
           min="0"
           placeholder="2000 (€20)"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
         <p className="text-sm text-gray-500 mt-1">Enter price in cents (e.g., 2000 for €20)</p>
       </div>
@@ -136,7 +136,7 @@ export default function CreateGroupSessionForm() {
           id="location"
           placeholder="e.g., Central Park, Downtown Court"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-500"
         />
       </div>
 
@@ -150,7 +150,7 @@ export default function CreateGroupSessionForm() {
           name="session_date"
           id="session_date"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
         />
       </div>
 
@@ -164,7 +164,7 @@ export default function CreateGroupSessionForm() {
           name="start_time"
           id="start_time"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
         />
       </div>
 
@@ -178,7 +178,7 @@ export default function CreateGroupSessionForm() {
           name="end_time"
           id="end_time"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
         />
       </div>
 

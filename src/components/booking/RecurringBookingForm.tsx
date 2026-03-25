@@ -116,7 +116,7 @@ export default function RecurringBookingForm({
           id="weeks"
           value={weeks}
           onChange={(e) => setWeeks(parseInt(e.target.value))}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
         >
           <option value={4}>4 weeks</option>
           <option value={8}>8 weeks</option>

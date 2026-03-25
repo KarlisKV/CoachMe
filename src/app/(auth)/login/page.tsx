@@ -22,7 +22,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-2">Welcome Back</h1>
-        <p className="text-gray-500 text-center mb-8">Sign in to your account</p>
+        <p className="text-gray-600 text-center mb-8">Sign in to your account</p>
 
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
@@ -40,7 +40,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               required
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
               placeholder="you@example.com"
             />
           </div>
@@ -55,7 +55,7 @@ export default function LoginPage() {
               type="password"
               required
               minLength={6}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
               placeholder="••••••••"
             />
           </div>
@@ -69,7 +69,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-gray-600 mt-6">
           Don&apos;t have an account?{' '}
           <Link href="/signup" className="text-blue-600 hover:underline font-medium">
             Sign Up

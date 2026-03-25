@@ -23,7 +23,7 @@ export default function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-2">Create Account</h1>
-        <p className="text-gray-500 text-center mb-8">Join CoachMe today</p>
+        <p className="text-gray-600 text-center mb-8">Join CoachMe today</p>
 
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
@@ -43,12 +43,12 @@ export default function SignupPage() {
                 className={`p-4 rounded-lg border-2 text-center transition-colors ${
                   role === 'client'
                     ? 'border-blue-600 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-gray-200 hover:border-gray-300 text-gray-900'
                 }`}
               >
                 <div className="text-2xl mb-1">&#127939;</div>
                 <div className="font-medium">Find a Coach</div>
-                <div className="text-xs text-gray-500 mt-1">Book sessions</div>
+                <div className="text-xs text-gray-600 mt-1">Book sessions</div>
               </button>
               <button
                 type="button"
@@ -56,12 +56,12 @@ export default function SignupPage() {
                 className={`p-4 rounded-lg border-2 text-center transition-colors ${
                   role === 'coach'
                     ? 'border-blue-600 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-gray-200 hover:border-gray-300 text-gray-900'
                 }`}
               >
                 <div className="text-2xl mb-1">&#127941;</div>
                 <div className="font-medium">Be a Coach</div>
-                <div className="text-xs text-gray-500 mt-1">Offer services</div>
+                <div className="text-xs text-gray-600 mt-1">Offer services</div>
               </button>
             </div>
             <input type="hidden" name="role" value={role} />
@@ -76,7 +76,7 @@ export default function SignupPage() {
               name="full_name"
               type="text"
               required
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
               placeholder="John Doe"
             />
           </div>
@@ -90,7 +90,7 @@ export default function SignupPage() {
               name="email"
               type="email"
               required
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
               placeholder="you@example.com"
             />
           </div>
@@ -105,7 +105,7 @@ export default function SignupPage() {
               type="password"
               required
               minLength={6}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 placeholder:text-gray-500"
               placeholder="••••••••"
             />
           </div>
@@ -119,7 +119,7 @@ export default function SignupPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{' '}
           <Link href="/login" className="text-blue-600 hover:underline font-medium">
             Sign In
